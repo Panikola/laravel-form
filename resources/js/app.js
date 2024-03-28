@@ -1,7 +1,11 @@
 import './bootstrap';
 import {createApp} from 'vue';
+import Toast from 'vue-toastification';
 import FeedbackForm from './components/FeedbackForm.vue';
+import 'vue-toastification/dist/index.css';
 
-createApp({})
-    .component('FeedbackForm', FeedbackForm)
-    .mount('#app');
+const app = createApp({});
+
+app.component('FeedbackForm', FeedbackForm);
+app.use(Toast, {});
+app.mount('#app');

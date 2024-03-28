@@ -15,12 +15,23 @@ class FileFeedbackStorage implements FeedbackStorage
 
     public function save(Feedback $feedback): void
     {
-        $data = [
+        $directory = dirname($this->filePath);
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        if (!file_exists($this->filePath)) {
+            touch($this->filePath);
+        }
+
+        $data = json_encode([
             'name' => $feedback->name,
             'phone' => $feedback->phone,
             'message' => $feedback->message,
-        ];
+            'date' => date('Y-m-d H:i:s'),
+        ]);
 
-        file_put_contents($this->filePath, json_encode($data) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filePath, $data . PHP_EOL, FILE_APPEND);
     }
 }
