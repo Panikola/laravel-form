@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Storages;
 
 use App\Models\Feedback;
 
-interface FeedbackStorage
+interface FeedbackStorageInterface
 {
     public function save(Feedback $feedback);
 }

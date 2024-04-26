@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Services\DatabaseFeedbackStorage;
-use App\Services\DualFeedbackStorage;
-use App\Services\FeedbackStorage;
-use App\Services\FileFeedbackStorage;
+use App\Storages\DatabaseFeedbackStorage;
+use App\Storages\DualFeedbackStorage;
+use App\Storages\FeedbackStorageInterface;
+use App\Storages\FileFeedbackStorage;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +18,7 @@ class FeedbackServiceProvider extends ServiceProvider implements DeferrableProvi
      */
     public function register(): void
     {
-        $this->app->singleton(FeedbackStorage::class, function ($app) {
+        $this->app->singleton(FeedbackStorageInterface::class, function ($app) {
             $storages = [];
 
             if (config('feedback.storage.database')) {
@@ -39,6 +39,6 @@ class FeedbackServiceProvider extends ServiceProvider implements DeferrableProvi
 
     public function provides(): array
     {
-        return [FeedbackStorage::class];
+        return [FeedbackStorageInterface::class];
     }
 }

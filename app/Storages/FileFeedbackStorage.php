@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Storages;
 
 use App\Models\Feedback;
 
-class FileFeedbackStorage implements FeedbackStorage
+class FileFeedbackStorage implements FeedbackStorageInterface
 {
     protected string $filePath;
 

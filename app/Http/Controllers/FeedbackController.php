@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Factories\FeedbackFactory;
 use App\Http\Requests\StoreFeedbackRequest;
-use App\Services\FeedbackStorage;
+use App\Services\FeedbackService;
+use Illuminate\Http\JsonResponse;
 
 class FeedbackController extends Controller
 {
-    private FeedbackStorage $storage;
-    private FeedbackFactory $factory;
+    private FeedbackService $service;
 
-    public function __construct(FeedbackStorage $storage, FeedbackFactory $factory)
+    public function __construct(FeedbackService $service)
     {
-        $this->storage = $storage;
-        $this->factory = $factory;
+        $this->service = $service;
     }
 
-    public function store(StoreFeedbackRequest $request)
+    public function store(StoreFeedbackRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
-        $feedback = $this->factory->create($validated);
-        $this->storage->save($feedback);
+        $feedback = $this->service->create($validated);
 
         return response()->json(['message' => 'Feedback saved successfully.']);
     }
